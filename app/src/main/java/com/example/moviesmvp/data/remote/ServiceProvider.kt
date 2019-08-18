@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ServiceProvider(context: Context) {
-    var retrofit: Retrofit
+    private var retrofit: Retrofit
 
     init {
         val client = OkHttpClient

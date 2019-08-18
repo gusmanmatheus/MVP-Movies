@@ -10,6 +10,6 @@ interface ApiService {
     fun getmMovies(
         @Query("api_key") api_key: String,
         @Query("language") language: String,
-        @Query("pages") page: Int
+        @Query("page") page: Int
     ): Call<ListMovies>
 }

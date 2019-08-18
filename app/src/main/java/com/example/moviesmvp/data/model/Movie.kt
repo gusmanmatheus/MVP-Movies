@@ -6,13 +6,13 @@ data class Movie(
     val title: String,
     @SerializedName("poster_path")
     val image: String,
-    @SerializedName("poster_path")
+    @SerializedName("release_date")
     val date: String,
     @SerializedName("overview")
     val synopsis: String
 )
 
-data class ListMovies(
+  class ListMovies(
     @SerializedName("results")
     val list: List<Movie>,
     @SerializedName("total_pages")

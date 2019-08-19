@@ -8,8 +8,12 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
 @Suppress("unused")
-class APP() : Application() {
-    private val modules = listOf(moduleBase, moduleListModules)
+class APP : Application() {
+    private val modules = listOf(
+        moduleBase,
+        moduleListModules
+    )
+
     override fun onCreate() {
         super.onCreate()
         startKoin {

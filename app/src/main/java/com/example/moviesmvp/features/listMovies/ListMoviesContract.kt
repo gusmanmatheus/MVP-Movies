@@ -9,6 +9,7 @@ interface ListMoviesContract {
     interface View : BaseView<Presenter> {
         fun setupList(list: List<Movie>)
         fun onFinishLoad()
+        fun showError(error:String)
     }
 
     interface Presenter : BasePresenter<View> {

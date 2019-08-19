@@ -2,4 +2,8 @@
     <string name="app_name">MoviesMvp</string>
     <string name="name_db">"moviesdb"</string>
 
+    <string name="titleApplication">Lista de Filmes </string>
+    <string name="title">Titulo</string>
+    <string name="patterDate">00/00/0000</string>
+    <string name="synopsis">Sinopse</string>
 </resources>

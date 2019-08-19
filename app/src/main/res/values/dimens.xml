@@ -1,3 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="textSize_medium">24sp</dimen>
+    
+    <dimen name="margin_medium">24dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="image_widthMedium">140dp</dimen>
+    <dimen name="image_heightMedium">200dp</dimen>
+    <dimen name="image_widthSmall">36dp</dimen>
+    <dimen name="image_heightSmall">36dp</dimen>
 </resources>

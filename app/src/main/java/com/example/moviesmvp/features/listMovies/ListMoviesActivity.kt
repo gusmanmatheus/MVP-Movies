@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.Toast
 import com.example.moviesmvp.R
 import com.example.moviesmvp.base.RCAdapter
 import com.example.moviesmvp.data.model.Movie
@@ -28,16 +29,16 @@ class ListMoviesActivity : AppCompatActivity(), ListMoviesContract.View {
         recyclerView.adapter = adapter
         setupToolbar()
         scrollLoading()
-        adapter.onItemClick = {movie,view ->
-            if(presenter.inserOrDelete(movie)){
+        adapter.onItemClick = { movie, view ->
+            if (presenter.inserOrDelete(movie)) {
                 view.favorite.setImageResource(R.drawable.favoriteon)
                 movie.favorite = true
-            }else{
+            } else {
                 view.favorite.setImageResource(R.drawable.favoriteoff)
                 movie.favorite = false
             }
         }
-       presenter.loadMore()
+        presenter.loadMore()
     }
 
 
@@ -45,9 +46,8 @@ class ListMoviesActivity : AppCompatActivity(), ListMoviesContract.View {
         if (adapter.data.size > 0) {
             adapter.add(list)
         } else {
-           adapter.setData(list)
+            adapter.setData(list)
         }
-
         onePage = false
     }
 
@@ -72,5 +72,9 @@ class ListMoviesActivity : AppCompatActivity(), ListMoviesContract.View {
                 }
             }
         })
+    }
+
+    override fun showError(error: String) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
     }
 }

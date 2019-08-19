@@ -20,7 +20,7 @@ class RCAdapter() : RecyclerView.Adapter<RCAdapter.Holder>() {
 
     private var isFinished = false
     var data = mutableListOf<Movie>()
-    var onItemClick: ((Movie,View) -> Unit) ={movie, view ->  }
+    var onItemClick: ((Movie, View) -> Unit) = { movie, view -> }
 
     companion object {
         const val HOLDER_MOVIE_TYPE = 1
@@ -80,7 +80,6 @@ class RCAdapter() : RecyclerView.Adapter<RCAdapter.Holder>() {
         data.indexOf(movie)
 
 
-
     abstract inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         open fun render(movie: Movie?) {}
     }
@@ -89,7 +88,7 @@ class RCAdapter() : RecyclerView.Adapter<RCAdapter.Holder>() {
         init {
             itemView.setOnClickListener {
                 data.getOrNull(adapterPosition)?.let { movie ->
-                    onItemClick(movie,itemView)
+                    onItemClick(movie, itemView)
 
                 }
             }
@@ -98,9 +97,9 @@ class RCAdapter() : RecyclerView.Adapter<RCAdapter.Holder>() {
         override fun render(movie: Movie?) {
             if (movie == null) return
 
-            if(movie.favorite){
+            if (movie.favorite) {
                 itemView.favorite.setImageResource(R.drawable.favoriteon)
-            }else{
+            } else {
                 itemView.favorite.setImageResource(R.drawable.favoriteoff)
 
             }

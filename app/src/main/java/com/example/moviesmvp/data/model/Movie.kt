@@ -8,14 +8,14 @@ data class Movie(
     @SerializedName("release_date")
     val date: String,
     @SerializedName("poster_path")
-    var image: String="",
+    var image: String = "",
     @SerializedName("overview")
     val synopsis: String,
-    var moviePage:Int,
-    var favorite:Boolean = false
+    var moviePage: Int,
+    var favorite: Boolean = false
 )
 
-  class ListMovies(
+class ListMovies(
     @SerializedName("results")
     val list: List<Movie>,
     @SerializedName("total_pages")

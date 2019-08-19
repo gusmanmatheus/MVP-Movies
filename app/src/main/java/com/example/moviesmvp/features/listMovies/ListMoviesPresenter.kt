@@ -1,6 +1,5 @@
 package com.example.moviesmvp.features.listMovies
 
-import android.util.Log
 import com.example.moviesmvp.data.local.MovieDAO
 import com.example.moviesmvp.data.model.ListMovies
 import com.example.moviesmvp.data.model.Movie
@@ -15,14 +14,12 @@ class ListMoviesPresenter(
     override var sizePage: Int = 0
     override var listMovies = ListMovies(emptyList(), 1, 0)
 
-
     override fun loadMore() {
         if (listMovies.pageCurrent >= listMovies.pagesTotal) {
             view.onFinishLoad()
         } else {
             nextPage()
         }
-
     }
 
     override fun nextPage() {
@@ -34,6 +31,12 @@ class ListMoviesPresenter(
                 selectFavorites()
             },
             fun(failure) {
+              var list =  getAllRecord(-1)
+                list.forEach {
+                    it.favorite = true
+                }
+                view.showError(failure)
+                view.setupList(list)
 
             })
     }
@@ -45,7 +48,6 @@ class ListMoviesPresenter(
             it.favorite = list.any { movie -> it == movie }
         }
         view.setupList(listMovies.list)
-
     }
 
     override fun inserOrDelete(movie: Movie): Boolean {
@@ -75,6 +77,5 @@ class ListMoviesPresenter(
     override fun getAllRecord(page: Int): List<Movie> {
         return db.getMovies(page)
     }
-
 
 }

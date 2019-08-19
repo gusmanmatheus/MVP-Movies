@@ -20,7 +20,7 @@ class RCAdapter() : RecyclerView.Adapter<RCAdapter.Holder>() {
 
     private var isFinished = false
     var data = mutableListOf<Movie>()
-     var onItemClick: ((Movie) -> Unit)? = null
+    var onItemClick: ((Movie,View) -> Unit) ={movie, view ->  }
 
     companion object {
         const val HOLDER_MOVIE_TYPE = 1
@@ -75,8 +75,11 @@ class RCAdapter() : RecyclerView.Adapter<RCAdapter.Holder>() {
         val positionEnd = data.size + if (isFinished) 0 else 1
         notifyItemRangeChanged(positionStart, positionEnd)
     }
+
     fun positionBy(movie: Movie) =
         data.indexOf(movie)
+
+
 
     abstract inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         open fun render(movie: Movie?) {}
@@ -86,27 +89,41 @@ class RCAdapter() : RecyclerView.Adapter<RCAdapter.Holder>() {
         init {
             itemView.setOnClickListener {
                 data.getOrNull(adapterPosition)?.let { movie ->
-                    onItemClick?.invoke(movie)
-                    Toast.makeText(itemView.context,movie.title,Toast.LENGTH_SHORT).show()
+                    onItemClick(movie,itemView)
+
                 }
             }
         }
+
         override fun render(movie: Movie?) {
             if (movie == null) return
 
-            if (movie.image != ""){
+            if(movie.favorite){
+                itemView.favorite.setImageResource(R.drawable.favoriteon)
+            }else{
+                itemView.favorite.setImageResource(R.drawable.favoriteoff)
+
+            }
+
+            if (movie.image != "") {
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w185/${movie.image}")
                     .into(itemView.imageMovie)
-            }else{
+            } else {
                 //itemView.imageMovi
             }
 
 
+
             itemView.titleMovie.text = movie.title
-            itemView.dateMovie.text = movie.date
+            itemView.dateMovie.text = datePatterBr(movie.date)
             itemView.synopsis.text = movie.synopsis
 
+        }
+
+        fun datePatterBr(date: String): String {
+            val dateBr = date.split("-")
+            return "${dateBr[2]}/${dateBr[1]}/${dateBr[0]}"
         }
     }
 

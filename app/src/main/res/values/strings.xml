@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MoviesMvp</string>
+    <string name="name_db">"moviesdb"</string>
+
 </resources>

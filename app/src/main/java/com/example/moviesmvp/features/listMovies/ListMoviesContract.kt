@@ -15,5 +15,11 @@ interface ListMoviesContract {
         var listMovies: ListMovies
         var sizePage: Int
         fun nextPage()
+        fun loadMore()
+        fun verifyRecord(id: Int):Boolean
+        fun recordMovie(movie: Movie):Boolean
+        fun deleteRecord(id: Int)
+        fun getAllRecord(page:Int):List<Movie>
+        fun inserOrDelete(movie: Movie):Boolean
     }
 }

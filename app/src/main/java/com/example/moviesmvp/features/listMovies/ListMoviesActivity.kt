@@ -8,12 +8,14 @@ import com.example.moviesmvp.R
 import com.example.moviesmvp.base.RCAdapter
 import com.example.moviesmvp.data.model.Movie
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.movie_layout.view.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
 class ListMoviesActivity : AppCompatActivity(), ListMoviesContract.View {
     override val presenter by inject<ListMoviesPresenter> { parametersOf(this) }
     private var loadListLocked = false
+    private var onePage = false
     private val adapter by lazy {
         RCAdapter()
     }
@@ -26,20 +28,27 @@ class ListMoviesActivity : AppCompatActivity(), ListMoviesContract.View {
         recyclerView.adapter = adapter
         setupToolbar()
         scrollLoading()
-        presenter.loadMore()
-
+        adapter.onItemClick = {movie,view ->
+            if(presenter.inserOrDelete(movie)){
+                view.favorite.setImageResource(R.drawable.favoriteon)
+                movie.favorite = true
+            }else{
+                view.favorite.setImageResource(R.drawable.favoriteoff)
+                movie.favorite = false
+            }
+        }
+       presenter.loadMore()
     }
 
 
     override fun setupList(list: List<Movie>) {
-
         if (adapter.data.size > 0) {
             adapter.add(list)
         } else {
            adapter.setData(list)
         }
 
-
+        onePage = false
     }
 
     private fun setupToolbar() {
@@ -57,7 +66,8 @@ class ListMoviesActivity : AppCompatActivity(), ListMoviesContract.View {
                 if (loadListLocked) return
                 val lastVisibleMoviePosition =
                     (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
-                if ((lastVisibleMoviePosition + (presenter.sizePage/2)) > adapter.itemCount) {
+                if ((lastVisibleMoviePosition + presenter.sizePage) > adapter.itemCount && !onePage) {
+                    onePage = true
                     presenter.loadMore()
                 }
             }

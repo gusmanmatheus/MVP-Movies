@@ -9,8 +9,8 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val moduleBase = module {
-    factory { ServiceProvider(get()) }
-    factory { ServiceRequest(get()) }
+    factory { ServiceProvider() }
+    factory { ServiceRequest() }
     factory { MovieDAO(get()) }
 }
 

@@ -8,10 +8,10 @@ import retrofit2.Response
 
 
 class ServiceRequest(val service: ServiceProvider) {
-       companion object {
-    const val API_KEY = "1f54bd990f1cdfb230adb312546d765d"
-    const val LANGUAGE = "pt-BR"
-     }
+    companion object {
+        const val API_KEY = "1f54bd990f1cdfb230adb312546d765d"
+        const val LANGUAGE = "pt-BR"
+    }
 
     fun getNextPage(
         page: Int,

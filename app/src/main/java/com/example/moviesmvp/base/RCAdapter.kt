@@ -1,16 +1,10 @@
 package com.example.moviesmvp.base
 
-import android.graphics.drawable.ColorDrawable
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.example.moviesmvp.R
 import com.example.moviesmvp.data.model.Movie
 import kotlinx.android.synthetic.main.movie_layout.view.*
@@ -18,7 +12,7 @@ import kotlinx.android.synthetic.main.movie_layout.view.*
 class RCAdapter() : RecyclerView.Adapter<RCAdapter.Holder>() {
 
 
-    private var isFinished = false
+    private var isFinished = true
     var data = mutableListOf<Movie>()
     var onItemClick: ((Movie, View) -> Unit) = { movie, view -> }
 
@@ -108,11 +102,7 @@ class RCAdapter() : RecyclerView.Adapter<RCAdapter.Holder>() {
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w185/${movie.image}")
                     .into(itemView.imageMovie)
-            } else {
-                //itemView.imageMovi
             }
-
-
 
             itemView.titleMovie.text = movie.title
             itemView.dateMovie.text = datePatterBr(movie.date)

@@ -32,7 +32,7 @@ class ListMoviesActivity : AppCompatActivity(), ListMoviesContract.View {
         setupToolbar()
         scrollLoading()
         adapter.onItemClick = { movie, view ->
-            if (presenter.inserOrDelete(movie)) {
+            if (presenter.insertOrDelete(movie)) {
                 view.favorite.setImageResource(R.drawable.favoriteon)
                 movie.favorite = true
             } else {
@@ -63,7 +63,8 @@ class ListMoviesActivity : AppCompatActivity(), ListMoviesContract.View {
     override fun onFinishLoad() {
         this.loadListLocked = true
     }
-    override fun revertFInishLoad(){
+
+    override fun revertFInishLoad() {
         this.loadListLocked = false
     }
 
@@ -72,6 +73,7 @@ class ListMoviesActivity : AppCompatActivity(), ListMoviesContract.View {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (loadListLocked) return
+
                 val lastVisibleMoviePosition =
                     (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
                 if ((lastVisibleMoviePosition + presenter.sizePage) > adapter.itemCount && !onePage) {
@@ -86,18 +88,19 @@ class ListMoviesActivity : AppCompatActivity(), ListMoviesContract.View {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
     }
 
-     fun invertAction(): Boolean {
+    private fun invertAction(): Boolean {
         this.orderList = !orderList
-         adapter.setData(emptyList())
-         if(orderList){
-             presenter.listMovies.pagesTotal = 1
-             presenter.listMovies.pageCurrent = 0
-         }else{
-             presenter.current = -1
-         }
-         presenter.loadMore()
+        adapter.setData(emptyList())
+        if (orderList) {
+            presenter.resetOrder()
+        } else {
+            presenter.resetReverseOrder()
+        }
 
-         return orderList
+        presenter.loadMore()
+
+        return orderList
     }
+
     override fun valueOrder() = this.orderList
 }

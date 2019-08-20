@@ -9,8 +9,8 @@ interface ListMoviesContract {
     interface View : BaseView<Presenter> {
         fun setupList(list: List<Movie>)
         fun onFinishLoad()
-        fun showError(error:String)
-        fun valueOrder():Boolean
+        fun showError(error: String)
+        fun valueOrder(): Boolean
         fun revertFInishLoad()
     }
 
@@ -19,10 +19,12 @@ interface ListMoviesContract {
         var sizePage: Int
         fun nextPage()
         fun loadMore()
-        fun verifyRecord(id: Int):Boolean
-        fun recordMovie(movie: Movie):Boolean
+        fun verifyRecord(id: Int): Boolean
+        fun recordMovie(movie: Movie): Boolean
         fun deleteRecord(id: Int)
-        fun getAllRecord(page:Int):List<Movie>
-        fun inserOrDelete(movie: Movie):Boolean
+        fun getAllRecord(page: Int): List<Movie>
+        fun insertOrDelete(movie: Movie): Boolean
+        fun resetOrder()
+        fun resetReverseOrder()
     }
 }

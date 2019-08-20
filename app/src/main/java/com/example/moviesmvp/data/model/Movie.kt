@@ -4,14 +4,14 @@ import com.google.gson.annotations.SerializedName
 
 data class Movie(
     val id: Int,
-    val title: String,
+    val title: String = "",
     @SerializedName("release_date")
-    val date: String,
+    val date: String = "",
     @SerializedName("poster_path")
     var image: String = "",
     @SerializedName("overview")
-    val synopsis: String,
-    var moviePage: Int,
+    val synopsis: String = "",
+    var moviePage: Int = 0,
     var favorite: Boolean = false
 )
 

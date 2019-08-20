@@ -15,13 +15,13 @@ class ListMoviesPresenter(
     override var listMovies = ListMovies(emptyList(), 1, 0)
     var current = -1
     override fun loadMore() {
-        val stoptScroll = if (view.valueOrder()) {
+        val stopScroll = if (view.valueOrder()) {
             listMovies.pageCurrent >= listMovies.pagesTotal
         } else {
             listMovies.pageCurrent <= 1
 
         }
-        if (stoptScroll) {
+        if (stopScroll) {
             view.onFinishLoad()
         } else {
             view.revertFInishLoad()
@@ -34,7 +34,7 @@ class ListMoviesPresenter(
         val numberPage = if (view.valueOrder()) {
             listMovies.pageCurrent + 1
         } else {
-            current +=1
+            current += 1
             listMovies.pagesTotal - current
         }
         //  val numberPage =if (view.valueOrder()) 1 else -1
@@ -60,12 +60,12 @@ class ListMoviesPresenter(
         val list: List<Movie> = getAllRecord(listMovies.pageCurrent)
 
         listMovies.list.forEach {
-            it.favorite = list.any { movie -> it == movie }
+            it.favorite = list.any { movie -> it.id == movie.id }
         }
         view.setupList(listMovies.list)
     }
 
-    override fun inserOrDelete(movie: Movie): Boolean {
+    override fun insertOrDelete(movie: Movie): Boolean {
         var add = false
         if (verifyRecord(movie.id)) {
             deleteRecord(movie.id)
@@ -93,4 +93,13 @@ class ListMoviesPresenter(
         return db.getMovies(page)
     }
 
+    override fun resetOrder() {
+        listMovies.pagesTotal = 1
+        listMovies.pageCurrent = 0
+    }
+
+    override fun resetReverseOrder() {
+        current = -1
+        listMovies.pageCurrent = listMovies.pagesTotal
+    }
 }

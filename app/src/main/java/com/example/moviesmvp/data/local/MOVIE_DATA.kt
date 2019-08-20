@@ -13,10 +13,10 @@ class MOVIE_DATA {
         const val query = "create table $TABLE_NAME" +
                 " ($ID integer primary key autoincrement," +
                 " $ID_MOVIE integer not null," +
-                " $TITLE text not null," +
-                " $DATE text not null," +
-                " $IMAGE text not null," +
-                " $SYNOPSIS text not null," +
+                " $TITLE text," +
+                " $DATE text," +
+                " $IMAGE text," +
+                " $SYNOPSIS text," +
                 " $PAGE text not null);"
     }
 }

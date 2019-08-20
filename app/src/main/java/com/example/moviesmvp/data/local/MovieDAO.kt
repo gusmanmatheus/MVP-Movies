@@ -2,6 +2,7 @@ package com.example.moviesmvp.data.local
 
 import android.content.ContentValues
 import android.content.Context
+import android.util.Log
 import com.example.moviesmvp.base.BaseDAO
 import com.example.moviesmvp.data.model.Movie
 
@@ -59,7 +60,7 @@ class MovieDAO(context: Context) : BaseDAO(context) {
                         cursor.getInt(0),
                         cursor.getString(1),
                         cursor.getString(2),
-                        cursor.getString(3),
+                        cursor.getString(3) ?: "",
                         cursor.getString(4),
                         cursor.getInt(5)
                     )
@@ -88,7 +89,7 @@ class MovieDAO(context: Context) : BaseDAO(context) {
             MOVIE_DATA.TABLE_NAME,
             arrayOf(MOVIE_DATA.ID_MOVIE),
             "${MOVIE_DATA.ID_MOVIE} =?",
-            arrayOf(" $idMovie"),
+            arrayOf("$idMovie"),
             null,
             null,
             null

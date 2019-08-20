@@ -10,6 +10,8 @@ interface ListMoviesContract {
         fun setupList(list: List<Movie>)
         fun onFinishLoad()
         fun showError(error:String)
+        fun valueOrder():Boolean
+        fun revertFInishLoad()
     }
 
     interface Presenter : BasePresenter<View> {

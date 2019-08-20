@@ -17,6 +17,8 @@ class ListMoviesActivity : AppCompatActivity(), ListMoviesContract.View {
     override val presenter by inject<ListMoviesPresenter> { parametersOf(this) }
     private var loadListLocked = false
     private var onePage = false
+    private var orderList = true
+
     private val adapter by lazy {
         RCAdapter()
     }
@@ -38,6 +40,9 @@ class ListMoviesActivity : AppCompatActivity(), ListMoviesContract.View {
                 movie.favorite = false
             }
         }
+        inversorList.setOnClickListener {
+            invertAction()
+        }
         presenter.loadMore()
     }
 
@@ -58,8 +63,11 @@ class ListMoviesActivity : AppCompatActivity(), ListMoviesContract.View {
     override fun onFinishLoad() {
         this.loadListLocked = true
     }
+    override fun revertFInishLoad(){
+        this.loadListLocked = false
+    }
 
-    fun scrollLoading() {
+    private fun scrollLoading() {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -77,4 +85,19 @@ class ListMoviesActivity : AppCompatActivity(), ListMoviesContract.View {
     override fun showError(error: String) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
     }
+
+     fun invertAction(): Boolean {
+        this.orderList = !orderList
+         adapter.setData(emptyList())
+         if(orderList){
+             presenter.listMovies.pagesTotal = 1
+             presenter.listMovies.pageCurrent = 0
+         }else{
+             presenter.current = -1
+         }
+         presenter.loadMore()
+
+         return orderList
+    }
+    override fun valueOrder() = this.orderList
 }

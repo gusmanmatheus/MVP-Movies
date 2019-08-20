@@ -20,7 +20,10 @@
                   android:textColor="@color/white"/>
 
     </android.support.v7.widget.Toolbar>
-
+    <Button android:id="@+id/inversorList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inverter"/>
     <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

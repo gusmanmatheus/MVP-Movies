@@ -13,17 +13,32 @@ class ListMoviesPresenter(
 
     override var sizePage: Int = 0
     override var listMovies = ListMovies(emptyList(), 1, 0)
-
+    var current = -1
     override fun loadMore() {
-        if (listMovies.pageCurrent >= listMovies.pagesTotal) {
+        val stoptScroll = if (view.valueOrder()) {
+            listMovies.pageCurrent >= listMovies.pagesTotal
+        } else {
+            listMovies.pageCurrent <= 1
+
+        }
+        if (stoptScroll) {
             view.onFinishLoad()
         } else {
+            view.revertFInishLoad()
             nextPage()
         }
     }
 
+
     override fun nextPage() {
-        service.getNextPage((this.listMovies.pageCurrent + 1),
+        val numberPage = if (view.valueOrder()) {
+            listMovies.pageCurrent + 1
+        } else {
+            current +=1
+            listMovies.pagesTotal - current
+        }
+        //  val numberPage =if (view.valueOrder()) 1 else -1
+        service.getNextPage((numberPage),
             fun(success) {
                 sizePage = success.list.size
                 listMovies = success
@@ -31,7 +46,7 @@ class ListMoviesPresenter(
                 selectFavorites()
             },
             fun(failure) {
-              var list =  getAllRecord(-1)
+                var list = getAllRecord(-1)
                 list.forEach {
                     it.favorite = true
                 }
@@ -41,7 +56,7 @@ class ListMoviesPresenter(
             })
     }
 
-    fun selectFavorites() {
+    private fun selectFavorites() {
         val list: List<Movie> = getAllRecord(listMovies.pageCurrent)
 
         listMovies.list.forEach {

@@ -19,8 +19,8 @@ class ListMovies(
     @SerializedName("results")
     val list: List<Movie>,
     @SerializedName("total_pages")
-    val pagesTotal: Int,
+    var pagesTotal: Int,
     @SerializedName("page")
-    val pageCurrent: Int
+    var pageCurrent: Int
 )
 
